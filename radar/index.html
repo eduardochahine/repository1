@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Radar de Notícias do Investidor</title>
+<style>
+  :root{
+    --bg:#0b0f17;--card:#131a26;--card2:#1a2333;--line:#253047;--txt:#e6ebf3;--mut:#8a97ad;
+    --pos:#22c55e;--neg:#ef4444;--neu:#eab308;--opp:#38bdf8;--acc:#a78bfa;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,sans-serif;background:var(--bg);color:var(--txt);line-height:1.5}
+  header{padding:28px 24px 18px;border-bottom:1px solid var(--line);background:linear-gradient(180deg,#111827,var(--bg))}
+  .wrap{max-width:1180px;margin:0 auto;padding:0 24px}
+  h1{margin:0;font-size:26px;letter-spacing:-.02em}
+  h1 span{color:var(--opp)}
+  h2{font-size:15px;text-transform:uppercase;letter-spacing:.08em;color:var(--mut);margin:34px 0 14px}
+  .sub{color:var(--mut);font-size:14px;margin-top:4px}
+  .perfil{display:flex;flex-wrap:wrap;gap:8px;margin-top:14px}
+  .pill{font-size:12px;padding:4px 10px;border-radius:999px;background:var(--card2);border:1px solid var(--line);color:var(--txt)}
+  .pill.x{color:var(--mut);text-decoration:line-through}
+  .pill.risk{background:#3b1d5e;border-color:#6d28d9}
+  .headline{background:var(--card);border:1px solid var(--line);border-left:4px solid var(--opp);border-radius:12px;padding:18px 20px;margin-top:22px}
+  .headline h3{margin:0 0 6px;font-size:19px}
+  .headline p{margin:0;color:#c5cede}
+  .termo{display:grid;grid-template-columns:repeat(auto-fill,minmax(135px,1fr));gap:10px}
+  .t{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:12px}
+  .t .k{font-size:12px;color:var(--mut)}
+  .t .v{font-size:18px;font-weight:700;margin:2px 0}
+  .t .d{font-size:12px}
+  .neg{color:var(--neg)}.pos{color:var(--pos)}.neu{color:var(--neu)}.opp{color:var(--opp)}
+  .filtros{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:14px}
+  .filtros button{background:var(--card2);border:1px solid var(--line);color:var(--txt);padding:7px 13px;border-radius:8px;cursor:pointer;font-size:13px}
+  .filtros button.on{background:var(--opp);color:#04121c;border-color:var(--opp);font-weight:600}
+  .grid{display:grid;grid-template-columns:2fr 1fr;gap:20px}
+  @media(max-width:900px){.grid{grid-template-columns:1fr}}
+  .news{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:18px;margin-bottom:14px}
+  .news .meta{display:flex;justify-content:space-between;gap:10px;font-size:12px;color:var(--mut);flex-wrap:wrap}
+  .news h4{margin:6px 0 8px;font-size:17px;line-height:1.35}
+  .news h4 a{color:var(--txt);text-decoration:none}.news h4 a:hover{color:var(--opp)}
+  .news .fato{color:#c5cede;font-size:14px;margin:0 0 10px}
+  .imp{display:flex;flex-wrap:wrap;gap:6px;margin:10px 0}
+  .chip{font-size:12px;padding:3px 9px;border-radius:6px;font-weight:600}
+  .chip.p2{background:#14532d;color:#86efac}.chip.p1{background:#163d26;color:#86efac}
+  .chip.n2{background:#5f1616;color:#fca5a5}.chip.n1{background:#3d1a1a;color:#fca5a5}
+  .chip.z{background:#2a2f3a;color:var(--mut)}
+  .box{border-radius:8px;padding:10px 12px;font-size:14px;margin-top:8px}
+  .box b{display:block;font-size:11px;text-transform:uppercase;letter-spacing:.07em;margin-bottom:3px}
+  .box.leit{background:#172033;border:1px solid var(--line)}.box.leit b{color:var(--acc)}
+  .box.op{background:#0c2533;border:1px solid #155e75}.box.op b{color:var(--opp)}
+  .score{font-weight:700;color:var(--opp)}
+  .lvl{font-size:11px;padding:2px 7px;border-radius:5px;margin-left:6px;vertical-align:middle}
+  .lvl.alta{background:var(--opp);color:#04121c}.lvl.media{background:#334155;color:#cbd5e1}.lvl.baixa{background:#1f2937;color:var(--mut)}
+  aside .panel{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:16px;margin-bottom:16px}
+  aside h3{margin:0 0 10px;font-size:15px}
+  .barrow{margin:9px 0}
+  .barrow .lbl{display:flex;justify-content:space-between;font-size:13px}
+  .bar{height:8px;background:#0f1520;border-radius:4px;position:relative;overflow:hidden;margin-top:4px}
+  .bar i{position:absolute;top:0;bottom:0;border-radius:4px}
+  .bar .mid{position:absolute;left:50%;top:0;bottom:0;width:1px;background:#3b4660}
+  ul.ag,ol.pl{margin:0;padding-left:0;list-style:none;font-size:13px}
+  ul.ag li{padding:7px 0;border-bottom:1px dashed var(--line);display:flex;gap:10px}
+  ul.ag li span{color:var(--mut);min-width:64px}
+  ul.ag li.hl{color:#fde68a}
+  ol.pl{counter-reset:c}
+  ol.pl li{counter-increment:c;padding:7px 0 7px 28px;position:relative;border-bottom:1px dashed var(--line)}
+  ol.pl li:before{content:counter(c);position:absolute;left:0;top:7px;width:20px;height:20px;border-radius:50%;background:var(--opp);color:#04121c;font-size:11px;font-weight:700;display:flex;align-items:center;justify-content:center}
+  .opps li{margin-bottom:10px;font-size:13px}
+  .auto .news{padding:12px 14px}
+  .auto h4{font-size:15px}
+  .empty{color:var(--mut);font-size:13px;background:var(--card);border:1px dashed var(--line);border-radius:10px;padding:14px}
+  code{background:#0f1520;padding:1px 6px;border-radius:4px;font-size:12px}
+  footer{color:var(--mut);font-size:12px;padding:30px 24px 40px;border-top:1px solid var(--line);margin-top:30px}
+</style>
+</head>
+<body>
+<header><div class="wrap">
+  <h1>📡 Radar <span>Investidor</span></h1>
+  <div class="sub" id="sub"></div>
+  <div class="perfil" id="perfil"></div>
+  <div class="headline" id="headline"></div>
+</div></header>
+
+<main class="wrap">
+  <h2>Termômetro do mercado</h2>
+  <div class="termo" id="termo"></div>
+
+  <div class="grid">
+    <section>
+      <h2>Notícias que importam para você <span style="text-transform:none;letter-spacing:0">(ordenadas por relevância para o seu perfil)</span></h2>
+      <div class="filtros" id="filtros"></div>
+      <div id="lista"></div>
+
+      <h2>Coletor automático (RSS)</h2>
+      <div class="auto" id="auto"></div>
+    </section>
+
+    <aside>
+      <h2>Sua carteira</h2>
+      <div class="panel">
+        <h3>Impacto líquido por classe</h3>
+        <div id="barras"></div>
+      </div>
+      <div class="panel">
+        <h3>🎯 Oportunidades detectadas</h3>
+        <ul class="ag opps" id="opps"></ul>
+      </div>
+      <div class="panel">
+        <h3>🗓️ Agenda da semana</h3>
+        <ul class="ag" id="agenda"></ul>
+      </div>
+      <div class="panel">
+        <h3>✅ Plano de ação</h3>
+        <ol class="pl" id="plano"></ol>
+      </div>
+    </aside>
+  </div>
+</main>
+
+<footer><div class="wrap">
+  Conteúdo informativo e educacional baseado em notícias públicas. Não é recomendação individual de investimento.
+  Confirme cotações nas fontes oficiais (B3, Tesouro Direto, BCB) antes de decidir.
+</div></footer>
+
+<script src="dados/perfil.js"></script>
+<script src="dados/briefing.js"></script>
+<script src="dados/noticias-auto.js" onerror="window.NOTICIAS_AUTO=null"></script>
+<script>
+const P = window.PERFIL, B = window.BRIEFING;
+const $ = id => document.getElementById(id);
+const esc = s => String(s ?? "").replace(/[&<>"]/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+const fmtData = d => new Date(d + "T12:00:00").toLocaleDateString("pt-BR",{day:"2-digit",month:"short"});
+const tickers = (P.tickers || []).map(t => t.toUpperCase());
+
+// Relevância pessoal = prioridade × Σ(|impacto| × peso da classe) + bônus por ticker citado
+function relevancia(n){
+  let s = 0;
+  for (const [c, v] of Object.entries(n.impacto || {})) {
+    const cl = P.classes[c]; if (cl && cl.investe) s += Math.abs(v) * cl.peso;
+  }
+  const texto = (n.titulo + " " + n.fato).toUpperCase();
+  const hit = tickers.filter(t => texto.includes(t));
+  return { score: Math.round(n.prioridade * s / 2 + hit.length * 30), hit };
+}
+
+// Cabeçalho
+$("sub").textContent = `Briefing de ${new Date(B.data+"T12:00:00").toLocaleDateString("pt-BR",{weekday:"long",day:"numeric",month:"long",year:"numeric"})} · feito para ${P.nome}`;
+$("perfil").innerHTML =
+  `<span class="pill risk">Perfil ${esc(P.risco)}</span><span class="pill">${esc(P.horizonte)}</span><span class="pill">${esc(P.objetivo)}</span>` +
+  Object.values(P.classes).filter(c=>c.investe).map(c=>`<span class="pill">${esc(c.nome)}</span>`).join("") +
+  P.exclui.map(x=>`<span class="pill x">${esc(x)}</span>`).join("") +
+  (tickers.length ? tickers.map(t=>`<span class="pill" style="border-color:var(--opp)">${esc(t)}</span>`).join("") : `<span class="pill" style="color:var(--mut)">tickers: adicione em dados/perfil.js</span>`);
+$("headline").innerHTML = `<h3>${esc(B.titulo)}</h3><p>${esc(B.resumo)}</p>`;
+
+// Termômetro
+$("termo").innerHTML = B.termometro.map(t=>`<div class="t"><div class="k">${esc(t.k)}</div><div class="v">${esc(t.v)}</div><div class="d ${t.t}">${esc(t.d)}</div></div>`).join("");
+
+// Notícias
+const noticias = B.noticias.map(n => ({...n, ...relevancia(n)})).sort((a,b)=>b.score-a.score);
+let filtro = "todas";
+function chips(imp){
+  return Object.entries(imp).map(([c,v])=>{
+    const cl = P.classes[c]; if(!cl) return "";
+    const cls = v>=2?"p2":v==1?"p1":v<=-2?"n2":v==-1?"n1":"z";
+    const sinal = v>0?"▲".repeat(v):v<0?"▼".repeat(-v):"●";
+    return `<span class="chip ${cls}">${sinal} ${esc(cl.nome)}</span>`;
+  }).join("");
+}
+function render(){
+  const lista = noticias.filter(n => filtro==="todas" ? true : filtro==="opp" ? n.oportunidade?.nivel==="alta" : (n.impacto[filtro]!==undefined));
+  $("lista").innerHTML = lista.map(n=>`
+    <article class="news">
+      <div class="meta"><span>${esc(n.fonte)} · ${fmtData(n.data)} · ${n.tags.map(esc).join(" · ")}</span><span>Relevância p/ você: <span class="score">${n.score}</span>${n.hit.length?` · 🎯 ${n.hit.join(", ")}`:""}</span></div>
+      <h4><a href="${esc(n.url)}" target="_blank" rel="noopener">${esc(n.titulo)}</a></h4>
+      <p class="fato">${esc(n.fato)}</p>
+      <div class="imp">${chips(n.impacto)}</div>
+      <div class="box leit"><b>Como afeta seus investimentos</b>${esc(n.leitura)}</div>
+      ${n.oportunidade?`<div class="box op"><b>Oportunidade <span class="lvl ${n.oportunidade.nivel}">${n.oportunidade.nivel}</span></b>${esc(n.oportunidade.texto)}</div>`:""}
+    </article>`).join("") || `<div class="empty">Nenhuma notícia nesse filtro.</div>`;
+}
+const filtros = [["todas","Todas"],["opp","🎯 Oportunidades altas"],...Object.entries(P.classes).filter(([,c])=>c.investe).map(([k,c])=>[k,c.nome])];
+$("filtros").innerHTML = filtros.map(([k,l])=>`<button data-k="${k}" class="${k===filtro?"on":""}">${esc(l)}</button>`).join("");
+$("filtros").onclick = e => { const k=e.target.dataset?.k; if(!k) return; filtro=k; [...$("filtros").children].forEach(b=>b.classList.toggle("on",b.dataset.k===k)); render(); };
+render();
+
+// Impacto líquido por classe (média ponderada pela prioridade, escala -2..+2)
+$("barras").innerHTML = Object.entries(P.classes).filter(([,c])=>c.investe).map(([k,c])=>{
+  let num=0,den=0; B.noticias.forEach(n=>{ if(n.impacto[k]!==undefined){ num+=n.impacto[k]*n.prioridade; den+=n.prioridade; }});
+  const v = den? num/den : 0, pct = Math.min(50, Math.abs(v)/2*50);
+  const cor = v>0.15?"var(--pos)":v<-0.15?"var(--neg)":"var(--neu)";
+  const txt = v>0.6?"Positivo":v>0.15?"Levemente positivo":v<-0.6?"Negativo":v<-0.15?"Levemente negativo":"Neutro";
+  return `<div class="barrow"><div class="lbl"><span>${esc(c.nome)}</span><span style="color:${cor}">${txt}</span></div>
+    <div class="bar"><div class="mid"></div><i style="background:${cor};${v>=0?`left:50%;width:${pct}%`:`right:50%;width:${pct}%`}"></i></div></div>`;
+}).join("");
+
+// Oportunidades ranqueadas
+const ordemNivel = {alta:0,media:1,baixa:2};
+$("opps").innerHTML = noticias.filter(n=>n.oportunidade).sort((a,b)=>ordemNivel[a.oportunidade.nivel]-ordemNivel[b.oportunidade.nivel]||b.score-a.score).slice(0,5)
+  .map(n=>`<li><div><span class="lvl ${n.oportunidade.nivel}" style="margin:0 6px 0 0">${n.oportunidade.nivel}</span><b>${esc(n.titulo.split(/: |; |, /)[0])}</b><br><span style="color:var(--mut)">${esc(n.oportunidade.texto.split(". ")[0])}.</span></div></li>`).join("");
+
+$("agenda").innerHTML = B.agenda.map(a=>`<li class="${a.destaque?"hl":""}"><span>${esc(a.dia)}</span>${esc(a.evento)}</li>`).join("");
+$("plano").innerHTML = B.plano.map(p=>`<li>${esc(p)}</li>`).join("");
+
+// Coletor automático
+const A = window.NOTICIAS_AUTO;
+if (!A || !A.itens || !A.itens.length) {
+  $("auto").innerHTML = `<div class="empty">Ainda não há coleta automática. Rode <code>python3 radar/radar.py</code> no seu computador para buscar as manchetes do dia (InfoMoney, Money Times, Seu Dinheiro, CoinDesk, CNBC…), classificadas pelo seu perfil.</div>`;
+} else {
+  $("auto").innerHTML = `<div class="sub" style="margin-bottom:10px">Coletado em ${esc(A.gerado_em)} · ${A.itens.length} notícias relevantes</div>` +
+    A.itens.slice(0,40).map(n=>`<article class="news">
+      <div class="meta"><span>${esc(n.fonte)} · ${esc(n.data)}</span><span>Relevância: <span class="score">${n.score}</span>${n.tickers.length?` · 🎯 ${n.tickers.map(esc).join(", ")}`:""}</span></div>
+      <h4><a href="${esc(n.url)}" target="_blank" rel="noopener">${esc(n.titulo)}</a></h4>
+      <div class="imp">${chips(n.impacto)}${n.oportunidade?`<span class="chip" style="background:#0c2533;color:var(--opp)">🎯 ${esc(n.oportunidade)}</span>`:""}</div>
+      ${n.leitura?`<div class="box leit"><b>Leitura automática</b>${esc(n.leitura)}</div>`:""}
+    </article>`).join("");
+}
+</script>
+</body>
+</html>
