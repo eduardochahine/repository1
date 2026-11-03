@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CR7 — Tributo a Cristiano Ronaldo</title>
+<meta name="description" content="Site de fã (não oficial) sobre a carreira de Cristiano Ronaldo: trajetória, títulos, recordes e números.">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>⚽</text></svg>">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@400;500;600;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<header class="nav" id="nav">
+  <a href="#topo" class="nav-logo">CR<span>7</span></a>
+  <button class="nav-toggle" aria-label="Abrir menu" aria-expanded="false" id="navToggle">☰</button>
+  <nav class="nav-links" id="navLinks">
+    <a href="#historia">História</a>
+    <a href="#trajetoria">Trajetória</a>
+    <a href="#numeros">Números</a>
+    <a href="#titulos">Títulos</a>
+    <a href="#recordes">Recordes</a>
+    <a href="#quiz">Quiz</a>
+  </nav>
+</header>
+
+<main>
+  <!-- HERO -->
+  <section class="hero" id="topo">
+    <div class="hero-bg" aria-hidden="true">
+      <span class="hero-seven">7</span>
+    </div>
+    <div class="hero-content">
+      <p class="eyebrow">Funchal, Madeira · 5 de fevereiro de 1985</p>
+      <h1>Cristiano<br><span>Ronaldo</span></h1>
+      <p class="hero-sub">Do menino da ilha da Madeira ao maior artilheiro da história do futebol profissional.
+        Disciplina, ambição e gols — muitos gols.</p>
+      <div class="hero-cta">
+        <a href="#trajetoria" class="btn btn-gold">Ver a trajetória</a>
+        <a href="#quiz" class="btn btn-ghost">Jogar o quiz</a>
+      </div>
+    </div>
+    <div class="hero-stats">
+      <div><strong>5×</strong><span>Bola de Ouro</span></div>
+      <div><strong>5×</strong><span>Champions League</span></div>
+      <div><strong>900+</strong><span>gols na carreira</span></div>
+    </div>
+    <a href="#historia" class="scroll-hint" aria-label="Rolar para baixo">↓</a>
+  </section>
+
+  <!-- HISTÓRIA -->
+  <section class="section" id="historia">
+    <div class="container two-col">
+      <div>
+        <p class="eyebrow">A história</p>
+        <h2>O menino que não aceitava perder</h2>
+      </div>
+      <div class="prose">
+        <p>Cristiano Ronaldo dos Santos Aveiro nasceu em Funchal, na ilha da Madeira, o caçula de quatro irmãos.
+          Começou no Andorinha, passou pelo Nacional e, aos 12 anos, deixou a família para morar em Lisboa
+          e entrar na academia do <strong>Sporting</strong>.</p>
+        <p>Em 2003, depois de brilhar num amistoso contra o Manchester United, foi contratado por Sir Alex Ferguson
+          e herdou a lendária camisa 7 de Old Trafford. Ali deixou de ser um ponta driblador para se tornar uma
+          máquina de gols — e conquistou sua primeira Bola de Ouro em 2008.</p>
+        <p>Vieram então o Real Madrid, onde virou o maior artilheiro da história do clube, a Juventus,
+          o retorno a Manchester e o Al-Nassr. Pela seleção, levou Portugal ao título inédito da
+          <strong>Eurocopa de 2016</strong> e se tornou o maior goleador de seleções de todos os tempos.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- TRAJETÓRIA -->
+  <section class="section section-alt" id="trajetoria">
+    <div class="container">
+      <p class="eyebrow">Trajetória</p>
+      <h2>Clube a clube</h2>
+      <p class="lead">Toque em um clube para ver os destaques da passagem.</p>
+
+      <div class="clubs" role="tablist" id="clubTabs"></div>
+      <article class="club-card" id="clubCard" role="tabpanel" aria-live="polite"></article>
+    </div>
+  </section>
+
+  <!-- NÚMEROS -->
+  <section class="section" id="numeros">
+    <div class="container">
+      <p class="eyebrow">Em números</p>
+      <h2>Uma carreira medida em recordes</h2>
+      <div class="stats-grid">
+        <div class="stat"><strong data-count="900" data-suffix="+">0</strong><span>gols oficiais na carreira</span></div>
+        <div class="stat"><strong data-count="140" data-suffix="+">0</strong><span>gols por Portugal</span></div>
+        <div class="stat"><strong data-count="220" data-suffix="+">0</strong><span>jogos pela seleção</span></div>
+        <div class="stat"><strong data-count="450">0</strong><span>gols pelo Real Madrid</span></div>
+        <div class="stat"><strong data-count="140">0</strong><span>gols na Champions League</span></div>
+        <div class="stat"><strong data-count="5">0</strong><span>Copas do Mundo com gol marcado</span></div>
+      </div>
+
+      <h3 class="sub-title">Gols por clube</h3>
+      <div class="bars" id="goalBars"></div>
+      <p class="note">Gols em jogos oficiais por passagem. Números aproximados de fontes públicas.</p>
+    </div>
+  </section>
+
+  <!-- TÍTULOS -->
+  <section class="section section-alt" id="titulos">
+    <div class="container">
+      <p class="eyebrow">Sala de troféus</p>
+      <h2>Títulos principais</h2>
+      <div class="trophies">
+        <div class="trophy trophy-big"><span class="t-num">5</span><span class="t-name">Bola de Ouro</span><span class="t-years">2008 · 2013 · 2014 · 2016 · 2017</span></div>
+        <div class="trophy trophy-big"><span class="t-num">5</span><span class="t-name">UEFA Champions League</span><span class="t-years">2008 · 2014 · 2016 · 2017 · 2018</span></div>
+        <div class="trophy"><span class="t-num">1</span><span class="t-name">Eurocopa</span><span class="t-years">2016</span></div>
+        <div class="trophy"><span class="t-num">2</span><span class="t-name">Liga das Nações</span><span class="t-years">2019 · 2025</span></div>
+        <div class="trophy"><span class="t-num">4</span><span class="t-name">Mundial de Clubes</span><span class="t-years">2008 · 2014 · 2016 · 2017</span></div>
+        <div class="trophy"><span class="t-num">3</span><span class="t-name">Premier League</span><span class="t-years">2007 · 2008 · 2009</span></div>
+        <div class="trophy"><span class="t-num">2</span><span class="t-name">La Liga</span><span class="t-years">2012 · 2017</span></div>
+        <div class="trophy"><span class="t-num">2</span><span class="t-name">Serie A</span><span class="t-years">2019 · 2020</span></div>
+        <div class="trophy"><span class="t-num">4</span><span class="t-name">Chuteira de Ouro europeia</span><span class="t-years">2008 · 2011 · 2014 · 2015</span></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- RECORDES -->
+  <section class="section" id="recordes">
+    <div class="container">
+      <p class="eyebrow">Recordes</p>
+      <h2>Marcas que talvez ninguém alcance</h2>
+      <ol class="records">
+        <li><h3>Maior artilheiro da história do futebol</h3><p>Primeiro jogador a passar dos 900 gols oficiais na carreira, somando clubes e seleção.</p></li>
+        <li><h3>Rei das seleções</h3><p>Maior goleador e jogador com mais partidas na história do futebol masculino de seleções.</p></li>
+        <li><h3>Senhor da Champions</h3><p>Maior artilheiro da história da Liga dos Campeões, com 140 gols.</p></li>
+        <li><h3>Gol em cinco Copas</h3><p>Primeiro homem a marcar em cinco edições diferentes da Copa do Mundo (2006 a 2022).</p></li>
+        <li><h3>Lenda do Bernabéu</h3><p>Maior artilheiro da história do Real Madrid, com 450 gols em 438 jogos.</p></li>
+        <li><h3>Ícone global</h3><p>A pessoa mais seguida do mundo nas redes sociais.</p></li>
+      </ol>
+    </div>
+  </section>
+
+  <!-- SIUUU -->
+  <section class="siu" aria-label="Comemoração">
+    <button class="siu-btn" id="siuBtn">SIUUU!</button>
+    <p>Clique para comemorar como o CR7 · <span id="siuCount">0</span> comemorações</p>
+  </section>
+
+  <!-- QUIZ -->
+  <section class="section section-alt" id="quiz">
+    <div class="container narrow">
+      <p class="eyebrow">Quiz</p>
+      <h2>Você conhece o CR7?</h2>
+      <div class="quiz" id="quizBox"></div>
+    </div>
+  </section>
+</main>
+
+<footer class="footer">
+  <p class="footer-logo">CR<span>7</span></p>
+  <p>Site de fã, não oficial, sem vínculo com Cristiano Ronaldo, clubes ou patrocinadores.<br>
+     Estatísticas aproximadas, compiladas de fontes públicas.</p>
+</footer>
+
+<script src="script.js"></script>
+</body>
+</html>
